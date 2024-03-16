@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary p-5 bg-hero mb-5">
+        <div class="row py-5">
+            <div class="col-12 text-center">
+                <h1 class="display-2 text-uppercase text-white mb-md-4">{{ trainer.full_name }} Page</h1>
+                <a href="{% url 'team:team_view' %}" class="btn btn-primary py-md-3 px-md-5 me-3">All Trainers</a>
+
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+    <!-- Blog Start -->
+    <div class="container-fluid p-5">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- Blog Detail Start -->
+                <div class="mb-5">
+                    <img class="img-fluid w-100 rounded mb-5" src="{{ trainer.image.url }}" alt="">
+                    <h1 class="text-uppercase mb-4">Biography</h1>
+                    <p>{{ trainer.full_name }} Skills:{% for skill in trainer.job_position.all %}<ul><li>{{ skill }}</li></ul>{% endfor %}</p>
+                    <p>About {{ trainer.full_name }} : {{ trainer.about_trainer }}</p>
+                    <p>{{ trainer.full_name}} Has {{ trainer.age }} Years Old.</p>
+                </div>
+                <!-- Blog Detail End -->
+
+                <!-- Comment List Start -->
+                <div id="comment_list" class="mb-5">
+                    <h3 class="text-uppercase mb-4">{{ comments.count }} Comments</h3>
+                    {% for comment in comments %}
+                        {% if not comment.parent %}
+                    <div class="d-flex mb-4">
+                        <img src="{% static 'img/user.jpg' %}" class="img-fluid rounded" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h4>{{ comment.title }}</h4>
+                            <h6><a href="">{{ comment.user.username }}</a> <small><i>{{ comment.published_at }}</i></small></h6>
+                            <p>{{ comment.comment_description }}</p>
+                            <button onclick="set_value({{ comment.pk }})" class="btn btn-sm btn-secondary">Reply</button>
+                        </div>
+                    </div>
+                            {% if comment.replies.all %}
+                                {% for reply in comment.replies.all %}
+                    <div class="d-flex ms-3 mb-4">
+                        <img src="{% static 'img/user.jpg' %}" class="img-fluid rounded" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h5>(reply to : {{ comment.comment_description|truncatechars:10 }} )</h5>
+                            <h6><a href="">{{ reply.user.username }}</a> <small><i>{{ reply.published_at }}</i></small></h6>
+                            <p>{{ reply.comment_description }}</p>
+                            <button onclick="set_value({{ reply.pk }})" class="btn btn-sm btn-secondary">Reply</button>
+                        </div>
+                    </div>
+
+                            {% if reply.replies.all %}
+                                {% for sub in reply.replies.all %}
+                    <div class="d-flex ms-5 mb-4">
+                        <img src="{% static 'img/user.jpg' %}" class="img-fluid rounded" style="width: 45px; height: 45px;">
+                        <div class="ps-3">
+                            <h5>(reply to : {{ reply.comment_description|truncatechars:10 }} )</h5>
+                            <h6><a href="">{{ sub.user.username }}</a> <small><i>{{ sub.published_at }}</i></small></h6>
+                            <p>{{ sub.comment_description }}</p>
+                        </div>
+                    </div>
+                                          {% endfor %}
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                        {% endif %}
+                                        {% endfor %}
+                </div>
+                <!-- Comment List End -->
+
+                <!-- Comment Form Start -->
+                <div class="bg-dark rounded p-5">
+                    <h3 class="text-light text-uppercase mb-4" id="leave_a_comment">Leave a comment</h3>
+                    <form method="post" action="{% url 'team:create_trainer_comment' trainer.pk %}">{% csrf_token %}
+                        <div class="row g-3">
+                            <input type="hidden" id="comment_parent_id" name="comment_parent_id" value="">
+                            <a id="cancel_reply_btn" style="display: none;" onclick="cancel_reply()"><button type="reset" class="btn btn-danger">Cancel Reply</button></a>
+                            <div id="comment_title_input" class="col-12 col-sm-6">
+                                {{ form.title }}
+                            </div>
+
+
+                            <div id="comment_body_input" class="col-12">
+                                {{ form.comment_description }}
+                            </div>
+
+                            <div class="col-12">
+                                <button id="create_comment_btn" class="btn btn-primary w-100 py-3" type="submit">Leave Your Comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Comment Form End -->
+            </div>
+
+            <!-- Sidebar Start -->
+            <div class="col-lg-4">
+                <!-- Search Form Start -->
+{#                <div class="mb-5">#}
+{#                    <div class="input-group">#}
+{#                        <input type="text" class="form-control p-3" placeholder="Keyword">#}
+{#                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>#}
+{#                    </div>#}
+{#                </div>#}
+                <!-- Search Form End -->
+
+                <!-- Category Start -->
+{#                <div class="mb-5">#}
+{#                    <h3 class="text-uppercase mb-4">Categories</h3>#}
+{#                    <div class="d-flex flex-column justify-content-start bg-dark rounded p-4">#}
+{#                        <a class="fs-5 fw-bold text-light text-uppercase mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Web Design</a>#}
+{#                        <a class="fs-5 fw-bold text-light text-uppercase mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Web Development</a>#}
+{#                        <a class="fs-5 fw-bold text-light text-uppercase mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Web Development</a>#}
+{#                        <a class="fs-5 fw-bold text-light text-uppercase mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Keyword Research</a>#}
+{#                        <a class="fs-5 fw-bold text-light text-uppercase" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Email Marketing</a>#}
+{#                    </div>#}
+{#                </div>#}
+                <!-- Category End -->
+
+                <!-- Recent Post Start -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4">Recent Post</h3>
+                    <div class="bg-dark rounded p-4">{% for recent in five_recents %}
+                        <div class="d-flex overflow-hidden mb-3">
+                            <img class="img-fluid flex-shrink-0 rounded-start" src="{{ recent.image.url }}" style="width: 75px;" alt="">
+                            <a href="" class="d-flex align-items-center bg-light rounded-end h5 text-uppercase p-3 mb-0">{{ recent.title }}
+                            </a>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <!-- Recent Post End -->
+
+                <!-- Tags Start -->
+{#                <div class="mb-5">#}
+{#                    <h3 class="text-uppercase mb-4">Tag Cloud</h3>#}
+{#                    <div class="d-flex flex-wrap m-n1">#}
+{#                        <a href="" class="btn btn-dark m-1">Design</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Development</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Marketing</a>#}
+{#                        <a href="" class="btn btn-dark m-1">SEO</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Writing</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Consulting</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Design</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Development</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Marketing</a>#}
+{#                        <a href="" class="btn btn-dark m-1">SEO</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Writing</a>#}
+{#                        <a href="" class="btn btn-dark m-1">Consulting</a>#}
+{#                    </div>#}
+{#                </div>#}
+                <!-- Tags End -->
+
+                <!-- Plain Text Start -->
+{#                <div>#}
+{#                    <h3 class="text-uppercase mb-4">Plain Text</h3>#}
+{#                    <div class="bg-dark rounded text-center text-light" style="padding: 30px;">#}
+{#                        <p>Vero sea et accusam justo dolor accusam lorem consetetur, dolores sit amet sit dolor clita kasd justo, diam accusam no sea ut tempor magna takimata, amet sit et diam dolor ipsum amet diam</p>#}
+{#                        <a href="" class="btn btn-primary py-2 px-4">Read More</a>#}
+{#                    </div>#}
+{#                </div>#}
+                <!-- Plain Text End -->
+            </div>
+            <!-- Sidebar End -->
+        </div>
+    </div>
+    <!-- Blog End -->
+    <script>
+    function set_value(id){
+        document.getElementById('comment_parent_id').value = id;
+        document.getElementById('leave_a_comment').textContent = 'Reply To Selected Comment';
+        document.getElementById('cancel_reply_btn').style = '';
+
+        window.location.href = '#leave_a_comment'
+    }
+    function cancel_reply(){
+        document.getElementById('cancel_reply_btn').style = 'display: none;';
+        document.getElementById('leave_a_comment').textContent = 'Leave A Comment';
+        document.getElementById('comment_parent_id').value = '';
+
+    }
+    </script>
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
+{##}
+{#    <script>#}
+{#        const commentCreateBtn = document.getElementById('create_comment_btn');#}
+{#        commentCreateBtn.addEventListener('click', function (e){#}
+{#            e.preventDefault();#}
+{#            let fd = new FormData();#}
+{#            fd.append('comment_title', document.getElementById('comment_title_input').value);#}
+{#            fd.append('comment_body', document.getElementById('comment_body_input').value);#}
+{#            fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');#}
+{#            axios.post('{% url "team:create_trainer_comment" trainer.pk %}', fd)#}
+{#                .then(res =>{#}
+{#                        console.log(res.data.status)#}
+{#                        let comment_title = document.getElementById('comment_title_input').value;#}
+{#                        document.getElementById('comment_title_input').value = ''#}
+{#                        let comment_body = document.getElementById('comment_body_input').value;#}
+{#                        document.getElementById('comment_body_input').value = ''#}
+{#                        const commentList = document.getElementById('comment_list');#}
+{#                        commentList.innerHTML +=#}
+{#                            `#}
+{#                    <div class="d-flex mb-4">#}
+{#                        <img src="" class="img-fluid rounded" style="width: 45px; height: 45px;">#}
+{#                        <div class="ps-3">#}
+{#                            <h4>${comment_title}</h4>#}
+{#                            <h6><a href="">${res.data.user_comment}</a> <small><i></i></small></h6>#}
+{#                            <p>${ comment_body}</p>#}
+{#                            <input type="hidden" name="${res.data.comment_pk}">#}
+                            {#<button onclick="set_value(${res.data.comment_pk})" class="btn btn-sm btn-secondary">Reply</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#`#}
+{#                })#}
+{#                .catch(err => {#}
+{#                    console.log(err);#}
+{##}
+{#                });#}
+{#        });#}
+{##}
+{#    </script>#}
+{% endblock %}

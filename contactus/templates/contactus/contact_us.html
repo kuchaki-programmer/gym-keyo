@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary p-5 bg-hero mb-5">
+        <div class="row py-5">
+            <div class="col-12 text-center">
+                <h1 class="display-2 text-uppercase text-white mb-md-4">Contact</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid p-5">
+        <div class="mb-5 text-center">
+            <h5 class="text-primary text-uppercase">Contact Us</h5>
+            <h1 class="display-3 text-uppercase mb-0">Get In Touch</h1>
+        </div>
+        <div class="row g-5 mb-5">
+            <div class="col-lg-4">
+                <div class="d-flex flex-column align-items-center bg-dark rounded text-center py-5 px-3">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-map-marker-alt fs-4 text-white"></i>
+                    </div>
+                    <h5 class="text-uppercase text-primary">Visit Us</h5>
+                    <p class="text-secondary mb-0">Mashhad, Shaandiz, Maskan-E-Mehr</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex flex-column align-items-center bg-dark rounded text-center py-5 px-3">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-envelope fs-4 text-white"></i>
+                    </div>
+                    <h5 class="text-uppercase text-primary">Email Us</h5>
+                    <p class="text-secondary mb-0">kuchaki.programmer@gmail.com</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex flex-column align-items-center bg-dark rounded text-center py-5 px-3">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fa fa-phone fs-4 text-white"></i>
+                    </div>
+                    <h5 class="text-uppercase text-primary">Call Us</h5>
+                    <p class="text-secondary mb-0">09935536216</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-lg-6">
+                <div class="bg-dark p-5">
+                    <form action="{% url 'contact_us:contactus_view' %}" method="post">{% csrf_token %}
+                        <div class="row g-3">
+
+                            <div class="col-12">
+                                {{ form.message }}
+                            </div>
+
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <iframe class="w-100"
+ src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3211.1426128853395!2d59.31322255513501!3d36.40574473270152!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f6cf7ffceb7c9d5%3A0x261a1420a2754fa0!2z2YXYs9qp2YYg2YXZh9ixINi02KfZhtiv24zYsg!5e0!3m2!1sen!2s!4v1710448131134!5m2!1sen!2s"                    frameborder="0" style="height: 457px; border:0;" allowfullscreen="" aria-hidden="false"
+                    tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+
+
+
+{% endblock %}

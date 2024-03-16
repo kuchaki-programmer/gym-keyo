@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+ <!-- Hero Start -->
+    <div class="container-fluid bg-primary p-5 bg-hero mb-5">
+        <div class="row py-5">
+            <div class="col-12 text-center">
+                <h1 class="display-2 text-uppercase text-white mb-md-4">Classes</h1>
+
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+    <!-- Class Timetable Start -->
+    <div class="container-fluid p-5">
+        <div class="mb-5 text-center">
+            <h5 class="text-primary text-uppercase">Class Schedule</h5>
+            <h1 class="display-3 text-uppercase mb-0">Working Hours</h1>
+        </div>
+        <div class="tab-class text-center">
+            <ul class="nav nav-pills d-inline-flex justify-content-center bg-dark text-uppercase rounded-pill mb-5">
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white active" data-bs-toggle="pill" href="#tab-1">Saturday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-2">Sunday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-3">Monday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-4">Tuesday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-5">Wednesday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-6">Thursday</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill text-white" data-bs-toggle="pill" href="#tab-7">Friday</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane fade show p-0 active">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Saturday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'SUnday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-3" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Monday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}-{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-4" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Tuesday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-5" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Wednesday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-6" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Thursday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="tab-7" class="tab-pane fade p-0">
+                    <div class="row g-5">
+                        {% for day in week_days %}
+                            {% if day.title == 'Friday' %}
+                            {% for schedule in day.schedules.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="bg-dark rounded text-center py-5 px-3">
+                                <h6 class="text-uppercase text-light mb-3">{{ schedule.start_at|date:'H:i' }} - {{ schedule.end_at|date:'H:i' }}</h6>
+                                <h5 class="text-uppercase text-primary">{{ schedule.held_class }}</h5>
+                                <p class="text-uppercase text-secondary mb-0">{% for trainer in schedule.trainer.all %}{{ trainer.full_name }}{% endfor %}</p>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Class Timetable Start -->
+
+{% endblock %}
